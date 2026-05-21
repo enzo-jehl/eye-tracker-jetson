@@ -1,6 +1,15 @@
-# Dev-machine-only tooling (x86 + GPU box used for linting, type-checking,
-# AI training, and ONNX export). Not installed on the Jetson.
--r requirements.txt
+# Dev-machine / CI tooling (x86, modern Python). Not installed on the Jetson.
+#
+# This file is intentionally NOT `-r requirements.txt`. The Jetson runtime
+# pins (numpy==1.19.5, scipy==1.5.4) are old aarch64 + Py3.6 wheels that
+# don't exist for modern x86_64 + Py3.10, so pulling them in here breaks CI.
+# We install fresher numpy/scipy that work on the dev box; the runtime code
+# stays compatible with the Jetson's older versions via the API we use.
+
+# Numerical (modern wheels for x86 + Py3.10+)
+numpy>=1.24,<2.0
+scipy>=1.10
+PyYAML>=6.0
 
 # Lint / format / type-check
 black==22.8.0
