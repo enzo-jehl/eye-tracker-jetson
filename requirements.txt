@@ -1,0 +1,13 @@
+# Jetson Nano runtime dependencies.
+# Hard constraints: aarch64, JetPack 4.6.1, Python 3.6, CUDA 10.2.
+#
+# DO NOT install opencv-python here — it overwrites the NVIDIA CUDA build
+# (OpenCV 4.1.1) shipped with JetPack. Use the system package.
+#
+# PyTorch 1.10 is installed from NVIDIA's official aarch64 wheel, not PyPI:
+#   https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048
+# TensorRT / pycuda are pre-installed by JetPack.
+
+numpy==1.19.5
+scipy==1.5.4
+PyYAML==5.4.1

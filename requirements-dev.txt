@@ -1,0 +1,20 @@
+# Dev-machine-only tooling (x86 + GPU box used for linting, type-checking,
+# AI training, and ONNX export). Not installed on the Jetson.
+-r requirements.txt
+
+# Lint / format / type-check
+black==22.8.0
+ruff==0.4.10
+mypy==1.4.1
+
+# Tests
+pytest==7.0.1
+pytest-cov==4.1.0
+
+# Pre-commit
+pre-commit==2.17.0
+
+# AI training (dev box only)
+# torch==1.13.1
+# torchvision==0.14.1
+# onnx==1.12.0

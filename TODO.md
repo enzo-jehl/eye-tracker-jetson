@@ -10,22 +10,22 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!]` blocked
 
 Goal: a clean, lint-clean, test-running empty project before any feature code lands.
 
-- [ ] Create the directory tree from [CLAUDE.md](CLAUDE.md) (`src/eye_tracker/{capture,calibration,detection,geometry,tracking,ai,utils}/`, `tests/`, `scripts/`, `configs/`, `docs/`, `data/`)
-- [ ] Add `__init__.py` in every Python package
-- [ ] Write `pyproject.toml` with `black`, `ruff`, `mypy --strict`, `pytest` config
-- [ ] Write `requirements.txt` (pinned versions, aarch64 / Python 3.6 compatible)
-- [ ] Write `requirements-dev.txt` for dev-machine-only tooling (lint, type-check, training)
-- [ ] Add `.editorconfig`
-- [ ] Update `.gitignore` to also ignore `data/`, `*.engine`, `*.onnx`, `*.pt`, `runs/`, manifests, calibration outputs
-- [ ] Set up `pre-commit` hook running black + ruff + mypy + pytest on staged files
-- [ ] Set up GitHub Actions CI (lint + type-check + tests on every push)
-- [ ] Write `Makefile` (or `justfile`) with `make check`, `make test`, `make bench`, `make run`
-- [ ] Write `scripts/benchmark.py` skeleton (entry point for FPS / latency measurements)
-- [ ] Write `configs/perf.yaml` with target metrics (≥120 FPS, ≤8.3 ms/frame, target accuracy, head-pose robustness window)
-- [ ] Write a real `README.md` (project pitch, hardware, how to install, how to run, how to test)
-- [ ] Set up structured `logging` config in `src/eye_tracker/utils/logging.py`
-- [ ] Set up run-manifest writer in `src/eye_tracker/utils/manifest.py` (git hash, config, seeds, timestamps)
-- [ ] First green CI run on `main`
+- [x] Create the directory tree from [CLAUDE.md](CLAUDE.md) (`src/eye_tracker/{capture,calibration,detection,geometry,tracking,ai,utils}/`, `tests/`, `scripts/`, `configs/`, `docs/`, `data/`)
+- [x] Add `__init__.py` in every Python package
+- [x] Write `pyproject.toml` with `black`, `ruff`, `mypy --strict`, `pytest` config
+- [x] Write `requirements.txt` (pinned versions, aarch64 / Python 3.6 compatible)
+- [x] Write `requirements-dev.txt` for dev-machine-only tooling (lint, type-check, training)
+- [x] Add `.editorconfig`
+- [x] Update `.gitignore` to also ignore `data/`, `*.engine`, `*.onnx`, `*.pt`, `runs/`, manifests, calibration outputs
+- [x] Set up `pre-commit` hook running black + ruff + mypy + pytest on staged files
+- [x] Set up GitHub Actions CI (lint + type-check + tests on every push)
+- [x] Write `Makefile` (or `justfile`) with `make check`, `make test`, `make bench`, `make run`
+- [x] Write `scripts/benchmark.py` skeleton (entry point for FPS / latency measurements)
+- [x] Write `configs/perf.yaml` with target metrics (≥120 FPS, ≤8.3 ms/frame, target accuracy, head-pose robustness window)
+- [x] Write a real `README.md` (project pitch, hardware, how to install, how to run, how to test)
+- [x] Set up structured `logging` config in `src/eye_tracker/utils/logging.py`
+- [x] Set up run-manifest writer in `src/eye_tracker/utils/manifest.py` (git hash, config, seeds, timestamps)
+- [~] First green CI run on `main` — pending: install dev deps (`make install-dev`) and push to GitHub to trigger `.github/workflows/ci.yml`. Locally verified that utils import and a manifest round-trips; full `make check` requires `requirements-dev.txt` to be installed.
 
 ## Phase 1 — Math baseline (geometric gaze estimation)
 

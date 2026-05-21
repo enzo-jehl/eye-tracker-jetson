@@ -1,0 +1,33 @@
+# Target performance budget for the end-to-end pipeline.
+# Every PR must report measured impact on these metrics (see CLAUDE.md).
+
+# ---- Throughput / latency ----
+target_fps: 120                 # sustained, end-to-end, on Jetson Nano
+frame_budget_ms: 8.3            # 1000 / target_fps
+phase_1_min_fps: 60             # Phase 1 acceptance (math-only baseline)
+
+# Per-stage budget (filled in as stages land; total must stay <= frame_budget_ms).
+stage_budget_ms:
+  capture: null
+  detection: null
+  geometry: null
+  tracking: null
+  ai_correction: null
+
+# ---- Accuracy ----
+angular_accuracy_deg:
+  mean_target: 1.0              # ultimate goal (math + AI)
+  mean_phase_1: 2.0             # Phase 1 acceptance
+  p95_target: 2.0
+
+# ---- Head pose robustness window ----
+# Accuracy must hold within this envelope around the calibration pose.
+head_pose_robustness:
+  rotation_deg: 15.0            # ±15° on each axis
+  translation_cm: 5.0           # ±5 cm on each axis
+
+# ---- AI correction layer ----
+ai_inference_ms_target: 2.0     # TensorRT FP16 on Jetson Nano
+
+# ---- Regression guard (CI) ----
+benchmark_regression_threshold_pct: 10

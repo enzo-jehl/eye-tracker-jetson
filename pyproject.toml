@@ -1,0 +1,85 @@
+[build-system]
+requires = ["setuptools>=59", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eye-tracker-jetson"
+version = "0.0.0"
+description = "Stereo IR eye tracker on Jetson Nano (math baseline + AI correction)."
+requires-python = ">=3.6"
+authors = [{ name = "Enzo J." }]
+license = { text = "Proprietary" }
+readme = "README.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# ----------------------------------------------------------------------
+# Formatting
+# ----------------------------------------------------------------------
+[tool.black]
+line-length = 100
+# Jetson runtime is Python 3.6. Black 22.8 still accepts py36 as a target.
+target-version = ["py36"]
+
+# ----------------------------------------------------------------------
+# Linting
+# ----------------------------------------------------------------------
+[tool.ruff]
+line-length = 100
+# Jetson runtime is Python 3.6, but recent ruff versions only accept >= py37.
+# We use py37 as the closest available target; the 3.6 → 3.7 syntax delta is
+# minimal (mostly f-string `=` debug + async tweaks). Black still enforces
+# py36 above, which catches the main concerns.
+target-version = "py37"
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W",   # pycodestyle / pyflakes
+    "I",              # isort
+    "B",              # bugbear
+    "UP",             # pyupgrade
+    "SIM",            # simplifications
+    "RUF",            # ruff-specific
+]
+ignore = [
+    "E501",   # line length handled by black
+    # PEP 585 / PEP 604 modern annotations require Python 3.9+ / 3.10+ at
+    # runtime. We target Jetson Python 3.6, so we keep typing.Dict / List /
+    # Optional[X] over dict[X] / list[X] / X | None.
+    "UP006",
+    "UP007",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["B011"]
+"scripts/**" = []
+
+# ----------------------------------------------------------------------
+# Type checking — strict on src/
+# ----------------------------------------------------------------------
+[tool.mypy]
+# Modern mypy releases only accept python_version >= 3.7. We use 3.7 as
+# the closest stand-in for the Jetson's 3.6 runtime (see the ruff note above).
+python_version = "3.7"
+strict = true
+files = ["src"]
+warn_unused_configs = true
+show_error_codes = true
+namespace_packages = true
+explicit_package_bases = true
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = ["cv2.*", "numpy.*", "scipy.*", "yaml.*"]
+ignore_missing_imports = true
+
+# ----------------------------------------------------------------------
+# Tests
+# ----------------------------------------------------------------------
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = ["tests"]
+addopts = "-ra -q --strict-markers"
+filterwarnings = ["error"]
